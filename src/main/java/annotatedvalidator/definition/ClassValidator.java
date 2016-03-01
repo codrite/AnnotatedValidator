@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ClassValidator {
 
-    Class validatorClass();
+    Class target();
 
 }

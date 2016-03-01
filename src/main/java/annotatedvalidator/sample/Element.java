@@ -4,7 +4,7 @@ import annotatedvalidator.definition.ClassValidator;
 import annotatedvalidator.definition.FieldValidator;
 import annotatedvalidator.definition.StringValidatorImpl;
 
-@ClassValidator(validatorClass = StringValidatorImpl.class)
+@ClassValidator(target = StringValidatorImpl.class)
 public class Element {
 
     @FieldValidator(max = "10", min = "5", regex = "[A-Za-z]*", required = true)

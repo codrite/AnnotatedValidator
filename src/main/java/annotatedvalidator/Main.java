@@ -21,7 +21,7 @@ public class Main {
     @SuppressWarnings("unchecked")
     public static <T> String[] validate(T target) throws IllegalAccessException, InstantiationException {
         ClassValidator classValidator = target.getClass().getAnnotation(ClassValidator.class);
-        Validator<T> validator = (Validator<T>) classValidator.validatorClass().newInstance();
+        Validator<T> validator = (Validator<T>) classValidator.target().newInstance();
 
         validator.validate(target);
 
