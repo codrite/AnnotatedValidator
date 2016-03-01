@@ -13,6 +13,8 @@ public class Element {
     @FieldValidator(max = "10", min = "2", regex = "[A-Za-z]*", required = true)
     private String value;
 
+    private String optional;
+
     public void setName(String name) {
         this.name = name;
     }
@@ -21,4 +23,7 @@ public class Element {
         this.value = value;
     }
 
+    public void setOptional(String optional) {
+        this.optional = optional;
+    }
 }

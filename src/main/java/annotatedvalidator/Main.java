@@ -11,21 +11,24 @@ public class Main {
         Element element = new Element();
         element.setName("Arnabh");
         element.setValue("Sau");
-        validate(element);
+        String[] errorMessages = validate(element);
+
+        for(String eMessage : errorMessages) {
+            System.out.println(eMessage);
+        }
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> void validate(T target) throws IllegalAccessException, InstantiationException {
+    public static <T> String[] validate(T target) throws IllegalAccessException, InstantiationException {
         ClassValidator classValidator = target.getClass().getAnnotation(ClassValidator.class);
         Validator<T> validator = (Validator<T>) classValidator.validatorClass().newInstance();
 
         validator.validate(target);
 
-        if(validator.getMessages() > 0) {
-            for (String errorMessage : validator.getErrorMessage()) {
-                System.out.println(errorMessage);
-            }
-        }
+        String[] errorMessages = new String[validator.getMessages()];
+        System.arraycopy(validator.getErrorMessage(), 0, errorMessages, 0, validator.getMessages());
+
+        return errorMessages;
     }
 
 
