@@ -1,14 +1,13 @@
-package validator.sample;
+package annotatedvalidator.definition;
 
-
-import validator.definition.ClassValidator;
-import validator.definition.FieldValidator;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 public abstract class Validator<T> {
 
+    protected int messages;
+    protected String[] errorMessage;
     protected T element;
 
     public void validate(T element) {
@@ -18,7 +17,6 @@ public abstract class Validator<T> {
         if (thisClass.isAnnotationPresent(ClassValidator.class)) {
             validateField();
         }
-
     }
 
     protected void validateField() {
@@ -35,9 +33,29 @@ public abstract class Validator<T> {
 
     protected boolean verifyRegEx(final String regex, final String value) {
         Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(value).matches();
+        boolean matches = pattern.matcher(value).matches();
+        return matches;
     }
 
-    public abstract void validateFieldAttributes(Field field, String minLength, String maxLength, String regex);
+    @SuppressWarnings("unchecked")
+    protected <S> S getValue(Field field) {
+        S elementValue;
+        try {
+            elementValue = (S) field.get(element);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return elementValue;
+    }
+
+    public int getMessages() {
+        return messages;
+    }
+
+    public String[] getErrorMessage() {
+        return errorMessage;
+    }
+
+    public abstract void validateFieldAttributes(Field field, String min, String max, String regex);
 
 }
