@@ -15,12 +15,16 @@ public class Main {
     }
 
     @SuppressWarnings("unchecked")
-    public static void validate(Element element) throws IllegalAccessException, InstantiationException {
-        ClassValidator classValidator = element.getClass().getAnnotation(ClassValidator.class);
-        Validator<Element> validator = (Validator<Element>) classValidator.validatorClass().newInstance();
-        validator.validate(element);
-        for(String errorMessage : validator.getErrorMessage()) {
-            System.out.println(errorMessage);
+    public static <T> void validate(T target) throws IllegalAccessException, InstantiationException {
+        ClassValidator classValidator = target.getClass().getAnnotation(ClassValidator.class);
+        Validator<T> validator = (Validator<T>) classValidator.validatorClass().newInstance();
+
+        validator.validate(target);
+
+        if(validator.getMessages() > 0) {
+            for (String errorMessage : validator.getErrorMessage()) {
+                System.out.println(errorMessage);
+            }
         }
     }
 

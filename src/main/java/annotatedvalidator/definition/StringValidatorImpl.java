@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 public class StringValidatorImpl extends Validator<Element> {
 
     public StringValidatorImpl() {
-        this.errorMessage = new String[Element.class.getDeclaredFields().length];
+        super(Element.class);
     }
 
     @Override
@@ -16,8 +16,7 @@ public class StringValidatorImpl extends Validator<Element> {
         StringBuilder cause = new StringBuilder("Field : " + field.getName() + "\tvalue : " + elementValue + " \t[ ");
         int initialLength = cause.length();
 
-        if(elementValue.length() < Integer.parseInt(min)
-                || elementValue.length() > Integer.parseInt(max)) {
+        if(elementValue.length() < Integer.parseInt(min) || elementValue.length() > Integer.parseInt(max)) {
             cause.append(" length validation, ");
         }
 
@@ -30,7 +29,6 @@ public class StringValidatorImpl extends Validator<Element> {
         if(cause.length() > initialLength) {
             this.errorMessage[this.messages++] = cause.toString();
         }
-
     }
 
 }

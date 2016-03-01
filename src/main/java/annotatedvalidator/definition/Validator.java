@@ -10,6 +10,10 @@ public abstract class Validator<T> {
     protected String[] errorMessage;
     protected T element;
 
+    public Validator(Class clazz) {
+        this.errorMessage = new String[clazz.getDeclaredFields().length];
+    }
+
     public void validate(T element) {
         this.element = element;
         Class<?> thisClass = element.getClass();
